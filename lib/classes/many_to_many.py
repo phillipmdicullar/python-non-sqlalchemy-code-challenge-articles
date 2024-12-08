@@ -112,7 +112,56 @@ class Magazine:
         if len([article.author for article in self.articles()]) <= 2:
             return None
         return [article.author for article in self.articles()]
-        
+author1 = Author("John Doe")
+author2 = Author("Jane Smith")
+author3 = Author("Alice Johnson")
+
+# Create magazines
+magazine1 = Magazine("Tech Trends", "Technology")
+magazine2 = Magazine("Foodie's Delight", "Culinary")
+
+# Create articles
+article1 = Article(author1, magazine1, "AI in 2024")
+article2 = Article(author1, magazine1, "Quantum Computing Basics")
+article3 = Article(author2, magazine1, "The Future of Robotics")
+article4 = Article(author2, magazine2, "Top 10 Vegan Recipes")
+article5 = Article(author2, magazine1, "AI in Daily Life")
+article6 = Article(author3, magazine1, "Tech for Good")
+article7 = Article(author2, magazine1, "Machine Learning Simplified")
+article8 = Article(author3, magazine1, "Emerging Tech Startups")
+
+# Printing authors and their articles
+print("Authors and their articles:")
+for author in Author.all:
+    print(f"\nAuthor: {author.name}")
+    for article in author.articles():
+        print(f"  🤟 {article.title} in {article.magazine.name}")
+
+# Print magazines and their contributors
+print("\nMagazines and their contributors:")
+for magazine in Magazine.all:
+    print(f"\nMagazine🔥: {magazine.name}")
+    print(f"  Category🔥: {magazine.category}")
+    contributors = [author.name for author in magazine.contributors()]
+    print(f"  Contributors🔥: {', '.join(contributors)}")
+
+# Printing contributing authors with more than 2 articles
+print("\nContributing authors (more than 2 articles):")
+for magazine in Magazine.all:
+    contributing_authors = magazine.contributing_authors()
+    if contributing_authors:
+        print(f"{magazine.name} 😅: {', '.join([author.name for author in contributing_authors])}")
+    else:
+        print(f"{magazine.name} 😅: No contributing authors with more than 2 articles")
+
+# Printing topic areas for each author
+print("\nTopic areas for authors 😂:")
+for author in Author.all:
+    topic_areas = author.topic_areas()
+    if topic_areas:
+        print(f"{author.name}🙈: {', '.join(topic_areas)}")
+    else:
+        print(f"{author.name}🙈: No topics available")
         
 
     
