@@ -47,8 +47,8 @@ An interactive Python program that models a magazine publishing system with Auth
 - **author1 = Author("John Doe")**
 - **author2 = Author("Jane Smith")**
 #### Creating magazines
--**magazine1 = Magazine("Tech Trends", "Technology")**
--**magazine2 = Magazine("Foodie's Delight", "Culinary")**
+    **magazine1 = Magazine("Tech Trends", "Technology")**
+    **magazine2 = Magazine("Foodie's Delight", "Culinary")**
 
 #### Publishing articles
 `article1 = Article(author1, magazine1, "AI in 2024")`
