@@ -1,64 +1,110 @@
+from collections import Counter
 class Article:
-    #empty list
-    empty_list = []
-    def __init__(self, author, magazine, title: str):
+    all = []
+
+    def __init__(self, author, magazine, title):
         if not isinstance(title, str):
             raise ValueError("Title must be a string.")
-        if len(title) < 5 or len(title) > 50:
+        if not (5 <= len(title) <= 50):
             raise ValueError("Title length must be between 5 and 50 characters.")
+        self._title = title
         self.author = author
         self.magazine = magazine
-        self._title = title
-        Article.empty_list.append(self)
+        Article.all.append(self)
+
     @property
     def title(self):
         return self._title
+
     @title.setter
     def title(self, value):
         raise AttributeError("Title is immutable.")
-article = Article("Author Name", "Magazine Name", "How to wear a tutu with style")
-print(article.title)
-def test_title_is_immutable_str(self):
-    #title is an immutable string
-    author = Author("Carry Bradshaw")
-    magazine = Magazine("Vogue", "Fashion")
-    article_1 = Article(author, magazine, "How to wear a tutu with style")
- 
-    # Attempting to change the title should raise an exception
-    with self.assertRaises(AttributeError):
-        article_1.title = 500
-article = Article("Author Name", "Magazine Name", "How to wear a tutu with style")
-print(article.title)  
+
 
 class Author:
     def __init__(self, name):
-        self.name = name
+        if not isinstance(name, str):
+            raise ValueError("Name must be a string.")
+        if not name:
+            raise ValueError("Name cannot be empty.")
+        self._name = name
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        raise AttributeError("Name is immutable.")
 
     def articles(self):
-        pass
+        return [article for article in Article.all if article.author == self]
 
     def magazines(self):
-        pass
+        return list({article.magazine for article in self.articles()})
 
     def add_article(self, magazine, title):
-        pass
+        return Article(self, magazine, title)
 
     def topic_areas(self):
-        pass
+        return list({magazine.category for magazine in self.magazines()})
+
 
 class Magazine:
+    all = []
+
     def __init__(self, name, category):
-        self.name = name
-        self.category = category
+        if not isinstance(name, str):
+            raise ValueError("Name must be a string.")
+        if not (2 <= len(name) <= 16):
+            raise ValueError("Name length must be between 2 and 16 characters.")
+        if not isinstance(category, str):
+            raise ValueError("Category must be a string.")
+        if not category:
+            raise ValueError("Category must not be empty.")
+        self._name = name
+        self._category = category
+        Magazine.all.append(self)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Name must be a string.")
+        if not (2 <= len(value) <= 16):
+            raise ValueError("Name length must be between 2 and 16 characters.")
+        self._name = value
+
+    @property
+    def category(self):
+        return self._category
+
+    @category.setter
+    def category(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Category must be a string.")
+        if not value:
+            raise ValueError("Category must not be empty.")
+        self._category = value
 
     def articles(self):
-        pass
+        return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        pass
+        return list({article.author for article in self.articles()})
 
     def article_titles(self):
-        pass
+        return [article.title for article in self.articles()]
 
     def contributing_authors(self):
-        pass
+        author_counts = Counter(article.author for article in self.articles())
+        return [author for author, count in author_counts.items() if count > 2]
+
+    @classmethod
+    def top_publisher(cls):
+        if not Article.all:
+            return None
+        return max(cls.all, key=lambda magazine: len(magazine.articles()))
