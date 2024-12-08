@@ -10,8 +10,8 @@ An interactive Python program that models a magazine publishing system with Auth
 
 ## Getting started
 ### Prerequisites
--**Python 3.7+**
--**Basic understanding of OOP concepts in Python.**
+`Python 3.7+`
+`Basic understanding of OOP concepts in Python.`
 
 ### Setup
 1. Clone the repository:
